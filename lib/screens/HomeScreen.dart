@@ -1,39 +1,14 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart';
+import 'package:laboratorio4proyecto2/screens/cities_weather.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   final Function() toggleTheme;
 
   HomeScreen({required this.toggleTheme});
 
-  @override
-  _HomeScreenState createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
   late List<Map<String, dynamic>> citiesWeather = [];
-
-  @override
-  void initState() {
-    super.initState();
-    loadCitiesWeather();
-  }
-
-  Future<void> loadCitiesWeather() async {
-    try {
-      String data =
-          await rootBundle.loadString('assets/data/cities_weather.json');
-      List<dynamic> jsonResponse = json.decode(data);
-      setState(() {
-        citiesWeather =
-            jsonResponse.map((dynamic item) => item as Map<String, dynamic>).toList();
-      });
-    } catch (e) {
-      // Manejar errores si ocurre alguno al cargar los datos
-      print("Error cargando los datos: $e");
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,16 +25,16 @@ class _HomeScreenState extends State<HomeScreen> {
           IconButton(
             icon: Icon(Icons.palette),
             onPressed: () {
-              widget.toggleTheme();
+              toggleTheme();
             },
           ),
         ],
       ),
-      body: citiesWeather.isNotEmpty
+      body: citiesweather_item.isEmpty
           ? ListView.builder(
-              itemCount: citiesWeather.length,
+              itemCount: citiesweather_item.length,
               itemBuilder: (context, index) {
-                return _buildCityCard(context, citiesWeather[index]);
+                return _buildCityCard(context, citiesweather_item[index]);
               },
             )
           : Center(
@@ -68,28 +43,28 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildCityCard(BuildContext context, Map<String, dynamic> cityWeather) {
+  Widget _buildCityCard(BuildContext context, CitiesWeather cityWeather) {
     return Card(
       elevation: 4,
       margin: EdgeInsets.all(8),
       child: ListTile(
         leading: CircleAvatar(
-          backgroundImage: NetworkImage(cityWeather['image']),
+          backgroundImage: NetworkImage(cityWeather.image),
         ),
-        title: Text(cityWeather['city']),
+        title: Text(cityWeather.city),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text('Temperature: ${cityWeather['temperature']}'),
-            Text('Weather: ${cityWeather['weather']}'),
-            Text('Description: ${cityWeather['description']}'),
+            Text('Temperature: ${cityWeather.temperature}'),
+            Text('Weather: ${cityWeather.weather}'),
+            Text('Description: ${cityWeather.description}'),
           ],
         ),
         onTap: () {
           Navigator.pushNamed(
             context,
             '/lista_registros',
-            arguments: cityWeather['city'],
+            arguments: cityWeather.city,
           );
         },
       ),
