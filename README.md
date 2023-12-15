@@ -1,10 +1,10 @@
 # laboratorio4proyecto2
 
-A new Flutter project.
+Proyecto en Flutter simulando una aplicacion del clima en la cual se podra ver los pronosticos de ambas y tambien obtener informacion mas detallada como tambien poder elegir entre pasar de modo oscuro a modo claro. Creado por Gabino Mangas y Tomas Queheille.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+Antes de ejecutar el proyecto abrir una terminal y ejecutar el codigo "flutter pub get".
 
 A few resources to get you started if this is your first Flutter project:
 
