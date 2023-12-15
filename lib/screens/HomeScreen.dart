@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:convert';
-import 'package:flutter/services.dart';
 import 'package:laboratorio4proyecto2/screens/cities_weather.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -8,7 +6,7 @@ class HomeScreen extends StatelessWidget {
 
   HomeScreen({required this.toggleTheme});
 
-  late List<Map<String, dynamic>> citiesWeather = [];
+  final List<CitiesWeather> citiesWeather = citiesweather_item;
 
   @override
   Widget build(BuildContext context) {
@@ -30,20 +28,24 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: citiesweather_item.isEmpty
-          ? ListView.builder(
-              itemCount: citiesweather_item.length,
-              itemBuilder: (context, index) {
-                return _buildCityCard(context, citiesweather_item[index]);
-              },
-            )
-          : Center(
+      body: citiesWeather.isEmpty
+          ? Center(
               child: CircularProgressIndicator(),
+            )
+          : ListView.builder(
+              itemCount: citiesWeather.length,
+              itemBuilder: (context, index) {
+                return _buildCityCard(context, citiesWeather[index]);
+              },
             ),
     );
   }
 
   Widget _buildCityCard(BuildContext context, CitiesWeather cityWeather) {
+    final String? cityName = cityWeather.city;
+
+    // Usar el operador ?? para asignar un valor por defecto al argumento si es null
+
     return Card(
       elevation: 4,
       margin: EdgeInsets.all(8),
@@ -51,7 +53,7 @@ class HomeScreen extends StatelessWidget {
         leading: CircleAvatar(
           backgroundImage: NetworkImage(cityWeather.image),
         ),
-        title: Text(cityWeather.city),
+        title: Text(cityName ?? 'No se seleccionó ninguna ciudad'),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -64,13 +66,14 @@ class HomeScreen extends StatelessWidget {
           Navigator.pushNamed(
             context,
             '/lista_registros',
-            arguments: cityWeather.city,
+            arguments: cityName ?? 'No se seleccionó ninguna ciudad',
           );
         },
       ),
     );
   }
 }
+
 
 
 

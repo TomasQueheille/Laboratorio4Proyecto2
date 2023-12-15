@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:laboratorio4proyecto2/screens/CityRecord.dart';
 import 'screens/HomeScreen.dart';
 import 'screens/ListaRegistrosScreen.dart';
 import 'screens/VisualizacionRegistroScreen.dart';
@@ -10,9 +11,17 @@ class AppRoutes {
       case '/':
         return MaterialPageRoute(builder: (_) => HomeScreen(toggleTheme: () {  },));
       case '/lista_registros':
-        return MaterialPageRoute(builder: (_) => ListaRegistrosScreen());
+        return MaterialPageRoute(builder: (context) {
+    final String? cityName =
+        settings.arguments as String?;
+    return ListaRegistrosScreen(cityName: cityName);
+  });
       case '/visualizacion_registro':
-        return MaterialPageRoute(builder: (_) => VisualizacionRegistroScreen());
+        return MaterialPageRoute(builder: (context) {
+    final registro = 
+        settings.arguments as Registros;
+    return VisualizacionRegistroScreen(registro: registro);
+  });
       case '/widget_reutilizable':
         return MaterialPageRoute(builder: (_) => WidgetReutilizableScreen());
       default:

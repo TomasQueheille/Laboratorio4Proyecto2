@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:laboratorio4proyecto2/screens/CityRecord.dart';
 
 class VisualizacionRegistroScreen extends StatelessWidget {
+  final Registros registro;
+
+  const VisualizacionRegistroScreen({super.key, required this.registro});
   @override
   Widget build(BuildContext context) {
-    final String? registro =
-        ModalRoute.of(context)?.settings.arguments as String?;
+    final textStyle = Theme.of(context).textTheme;
 
     if (registro != null) {
       return Scaffold(
@@ -12,7 +15,14 @@ class VisualizacionRegistroScreen extends StatelessWidget {
           title: Text('Visualización de Registro'),
         ),
         body: Center(
-          child: Text('Detalles de $registro'),
+          child: Column(
+            children: [
+              Text('${registro.temperature}º',style: textStyle.headlineLarge),
+              Text('Detalles de ${registro.city}', style: textStyle.titleLarge),
+              Text(registro.weatherDescription, style: textStyle.titleMedium)
+            ],
+            mainAxisAlignment: MainAxisAlignment.center,
+          ),
         ),
       );
     } else {

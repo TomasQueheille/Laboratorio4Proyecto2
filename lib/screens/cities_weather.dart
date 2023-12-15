@@ -21,7 +21,7 @@ var citiesweather_item = <CitiesWeather>[
       weather: "Sunny",
       image:
           "https://cdn.tiqets.com/wordpress/blog/wp-content/uploads/2017/08/03134557/24-hours-in-new-york-1.jpg"),
-          CitiesWeather(
+  CitiesWeather(
       city: "Londres",
       temperature: "26ºC",
       description: "Cloud",
